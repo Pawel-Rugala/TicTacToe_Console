@@ -50,6 +50,39 @@ namespace TicTacToe_Console
             int index = fields.FindIndex(e => e.X == x && e.Y == y);
             return fields[index].Val;
         }
+        public bool checkWin()
+        {
 
+                if (fields[0].Val != 'e' && fields[0].Val == fields[1].Val && fields[1].Val == fields[3].Val || fields[0].Val != 'e' && fields[0].Val == fields[3].Val && fields[3].Val == fields[6].Val || fields[0].Val != 'e' && fields[0].Val == fields[4].Val && fields[4].Val == fields[8].Val)
+                {
+                    Console.SetCursorPosition(3, 17);
+                    Console.WriteLine($"{fields[0].Val} wins");
+                    return false;
+                }
+                else if (fields[4].Val != 'e' && fields[4].Val == fields[3].Val && fields[3].Val == fields[5].Val || fields[4].Val != 'e' && fields[4].Val == fields[1].Val && fields[1].Val == fields[7].Val)
+                {
+                    Console.SetCursorPosition(3, 17);
+                    Console.WriteLine($"{fields[4].Val} wins");
+                    return false;
+                }
+                else if (fields[8].Val != 'e' && fields[8].Val == fields[4].Val && fields[4].Val == fields[0].Val || fields[8].Val != 'e' && fields[8].Val == fields[5].Val && fields[5].Val == fields[2].Val || fields[8].Val != 'e' && fields[8].Val == fields[7].Val && fields[7].Val == fields[6].Val)
+                {
+                    Console.SetCursorPosition(3, 17);
+                    Console.WriteLine($"{fields[8].Val} wins");
+                    return false;
+                }
+                else
+                {
+                    var areEs = fields.FindIndex(elem => elem.Val == 'e');
+                    if (areEs == -1)
+                    {
+                        Console.SetCursorPosition(3, 17);
+                        Console.WriteLine("Game over");
+                        return false;
+                    }
+
+                    return true;
+                }
+        }
     }
 }

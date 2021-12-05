@@ -10,7 +10,7 @@ namespace TicTacToe_Console
             int gameNo = 1;
             bool xTurn = true;
 
-
+            //hqweljasld 
             //Console.SetCursorPosition(4, 6);
             //Console.ReadLine();
 
@@ -19,13 +19,13 @@ namespace TicTacToe_Console
                 Console.WriteLine("Tic Tac Toe!\n");
                 Console.WriteLine("    X / O   \n\n");
                 PrintBoard();
-                bool isEnd = false;
                 var board = new Board(gameNo);
-
+                bool isEnd = true;
                 do
                 {
+                    bool error = false;
                     char mark;
-                    if(xTurn)
+                    if (xTurn)
                     {
                         mark = 'X'; 
                     }
@@ -35,109 +35,103 @@ namespace TicTacToe_Console
                     }
                     
                     Console.SetCursorPosition(board.LP, board.TP);
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write(" ");
                     ConsoleKeyInfo keypress = Console.ReadKey();
-                    switch (keypress.Key)
+                    if (isEnd)
                     {
-                        case ConsoleKey.UpArrow:
-                            if(board.getValue(board.LP, board.TP)=='e')
-                            {
-                                Console.SetCursorPosition(board.LP, board.TP);
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write(" ");
-                            }
-                            if(board.TP == 6)
-                            {
+                        switch (keypress.Key)
+                        {
+                            case ConsoleKey.UpArrow:
+
+                                if (board.TP == 6)
+                                {
                                     board.TP = 14;
-                            } else
-                            {
-                                board.TP -= 4;
-                            }
-                            Console.SetCursorPosition(board.LP, board.TP);
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.Write(" ");
-                            break;
-                        case ConsoleKey.DownArrow:
-                            if (board.getValue(board.LP, board.TP) == 'e')
-                            {
+                                }
+                                else
+                                {
+                                    board.TP -= 4;
+                                }
+
+                                break;
+                            case ConsoleKey.DownArrow:
+                                if (board.TP == 14)
+                                {
+                                    board.TP = 6;
+                                }
+                                else
+                                {
+                                    board.TP += 4;
+                                }
+
+                                break;
+                            case ConsoleKey.LeftArrow:
+                                if (board.LP == 4)
+                                {
+                                    board.LP = 12;
+                                }
+                                else
+                                {
+                                    board.LP -= 4;
+                                }
+
+                                break;
+                            case ConsoleKey.RightArrow:
+                                if (board.LP == 12)
+                                {
+                                    board.LP = 4;
+                                }
+                                else
+                                {
+                                    board.LP += 4;
+                                }
+                                break;
+                            case ConsoleKey.Spacebar:
                                 Console.SetCursorPosition(board.LP, board.TP);
-                                Console.BackgroundColor = ConsoleColor.Black;
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write(" ");
-                            }
-                            if (board.TP == 14)
-                            {
-                                board.TP = 6;
-                            }
-                            else
-                            {
-                                board.TP += 4;
-                            }
-                            if (board.getValue(board.LP, board.TP) == 'e')
-                            {
-                                Console.SetCursorPosition(board.LP, board.TP);
-                                Console.BackgroundColor = ConsoleColor.Gray;
-                                Console.ForegroundColor = ConsoleColor.Gray;
-                                Console.Write(" ");
-                            }
-                            break;
-                        case ConsoleKey.LeftArrow:
-                            Console.SetCursorPosition(board.LP, board.TP);
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.Write(" ");
-                            if (board.LP == 4)
-                            {
-                                board.LP = 12;
-                            }
-                            else
-                            {
-                                board.LP -= 4;
-                            }
-                            Console.SetCursorPosition(board.LP, board.TP);
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.Write(" ");
-                            break;
-                        case ConsoleKey.RightArrow:
-                            Console.SetCursorPosition(board.LP, board.TP);
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.Write(" ");
-                            if (board.LP == 12)
-                            {
-                                board.LP = 4;
-                            }
-                            else
-                            {
-                                board.LP += 4;
-                            }
-                            Console.SetCursorPosition(board.LP, board.TP);
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.Write(" ");
-                            break;
-                        case ConsoleKey.Spacebar:
-                            Console.SetCursorPosition(board.LP+1, board.TP);
-                            Console.BackgroundColor = ConsoleColor.Black;
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.Write(" ");
-                            Console.SetCursorPosition(board.LP, board.TP);
-                            Console.BackgroundColor = xTurn ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
-                            Console.ForegroundColor = ConsoleColor.White;
-                            board.addMark(mark);
-                            Console.Write(mark);
-                            board.LP = 4;
-                            board.TP = 6;
-                            xTurn = !xTurn;
-                            Console.SetCursorPosition(board.LP, board.TP);
-                            break;
+                                if (board.getValue(board.LP, board.TP) == 'e')
+                                {
+                                    board.addMark(mark);
+                                    Console.Write(mark);
+                                    board.LP = 4;
+                                    board.TP = 6;
+                                    xTurn = !xTurn;
+                                }
+                                else
+                                {
+                                    Console.SetCursorPosition(board.LP, board.TP);
+                                    Console.Write(board.getValue(board.LP, board.TP));
+                                    error = true;
+                                    do
+                                    {
+                                        Console.SetCursorPosition(3, 17);
+                                        Console.WriteLine("Sorry this position is taken already choose different.  Press ESC to continue!");
+                                        Console.WriteLine("");
+                                        ConsoleKeyInfo removeError = Console.ReadKey();
+                                        if (removeError.Key == ConsoleKey.Escape)
+                                        {
+                                            error = false;
+                                        }
+                                    } while (error);
+                                    Console.SetCursorPosition(3, 17);
+                                    Console.WriteLine("===  Move using arrow keys and place mark pressing SPACE ===================================================");
+                                }
+                                break;
+
+
+                        }
                     }
-                } while (!isEnd);
+                        isEnd = board.checkWin();
+                } while (isEnd);
+
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine("Wanna play again? Yes or No?");
+                string choice = Console.ReadLine();
+                if (choice == "No")
+                {
+                    gameInProgress = false;
+                }
+                else
+                {
+                    Console.SetCursorPosition(0, 0);
+                }
 
             } while (gameInProgress);
         }
