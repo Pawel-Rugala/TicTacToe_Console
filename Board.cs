@@ -8,16 +8,28 @@ namespace TicTacToe_Console
 {
     public class Board
     {
-        public Board(int num)
+        public Board()
         {
-            Title = $"Game {num}";
             LP = 4;
             TP = 6;
+            NotEnd = true;
+            GameNo = 1;
+            xTurn = true;
+            Error = false;
+            Mark = 'X';
+            Title = $"Game {GameNo}";
         }
+        public bool GameInProgress { get; set; }
+        public int GameNo { get; set; }
+        public bool xTurn { get; set; }
         public string Title { get; set; }
         public int LP { get; set; }
         public int TP { get; set; }
-        private List<Field> fields = new List<Field>() 
+        public char Mark { get; set; }
+        public bool NotEnd { get; set; }
+        public ConsoleKeyInfo Keypress { get; set; }    
+        public bool Error { get; set; }
+        private List<Field> fields = new List<Field>()
         {
             new Field(4, 6),
             new Field(8, 6),
@@ -30,18 +42,9 @@ namespace TicTacToe_Console
             new Field(12, 14)
         };
 
-
-        public void getValues()
-        {
-            foreach(var field in fields)
-            {
-                Console.WriteLine($"{field.Val}: {field.X} | {field.Y}");
-            }
-        }
-
         public void addMark(char mark)
         {
-            int index = fields.FindIndex(e => e.X == LP && e.Y ==TP);
+            int index = fields.FindIndex(e => e.X == LP && e.Y == TP);
             fields[index].Val = mark;
         }
 
@@ -52,37 +55,128 @@ namespace TicTacToe_Console
         }
         public bool checkWin()
         {
+            if (fields[0].Val != 'e' && fields[0].Val == fields[1].Val && fields[1].Val == fields[2].Val)
+            {
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine($"{fields[0].Val} wins");
+                return false;
+            }
+            else if (fields[0].Val != 'e' && fields[0].Val == fields[3].Val && fields[3].Val == fields[6].Val)
+            {
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine($"{fields[0].Val} wins");
+                return false;
+            }
+            else if (fields[0].Val != 'e' && fields[0].Val == fields[4].Val && fields[4].Val == fields[8].Val)
+            {
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine($"{fields[0].Val} wins");
+                return false;
+            }
+            else if (fields[4].Val != 'e' && fields[4].Val == fields[3].Val && fields[3].Val == fields[5].Val)
+            {
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine($"{fields[4].Val} wins");
+                return false;
+            }
+            else if (fields[4].Val != 'e' && fields[4].Val == fields[1].Val && fields[1].Val == fields[7].Val)
+            {
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine($"{fields[4].Val} wins");
+                return false;
+            }
+            else if (fields[8].Val != 'e' && fields[8].Val == fields[4].Val && fields[4].Val == fields[0].Val)
+            {
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine($"{fields[8].Val} wins");
+                return false;
+            }
+            else if (fields[8].Val != 'e' && fields[8].Val == fields[5].Val && fields[5].Val == fields[2].Val)
+            {
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine($"{fields[8].Val} wins");
+                return false;
+            }
+            else if (fields[8].Val != 'e' && fields[8].Val == fields[7].Val && fields[7].Val == fields[6].Val)
+            {
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine($"{fields[8].Val} wins");
+                return false;
+            }
+            else if(fields[6].Val != 'e' && fields[6].Val == fields[4].Val && fields[4].Val == fields[2].Val)
+            {
+                Console.SetCursorPosition(3, 17);
+                Console.WriteLine($"{fields[8].Val} wins");
+                return false;
+            }
+            else
+            {
+                var areEs = fields.FindIndex(elem => elem.Val == 'e');
+                if (areEs == -1)
+                {
+                    Console.SetCursorPosition(3, 17);
+                    Console.WriteLine("Game over");
+                    return false;
+                }
 
-                if (fields[0].Val != 'e' && fields[0].Val == fields[1].Val && fields[1].Val == fields[3].Val || fields[0].Val != 'e' && fields[0].Val == fields[3].Val && fields[3].Val == fields[6].Val || fields[0].Val != 'e' && fields[0].Val == fields[4].Val && fields[4].Val == fields[8].Val)
-                {
-                    Console.SetCursorPosition(3, 17);
-                    Console.WriteLine($"{fields[0].Val} wins");
-                    return false;
-                }
-                else if (fields[4].Val != 'e' && fields[4].Val == fields[3].Val && fields[3].Val == fields[5].Val || fields[4].Val != 'e' && fields[4].Val == fields[1].Val && fields[1].Val == fields[7].Val)
-                {
-                    Console.SetCursorPosition(3, 17);
-                    Console.WriteLine($"{fields[4].Val} wins");
-                    return false;
-                }
-                else if (fields[8].Val != 'e' && fields[8].Val == fields[4].Val && fields[4].Val == fields[0].Val || fields[8].Val != 'e' && fields[8].Val == fields[5].Val && fields[5].Val == fields[2].Val || fields[8].Val != 'e' && fields[8].Val == fields[7].Val && fields[7].Val == fields[6].Val)
-                {
-                    Console.SetCursorPosition(3, 17);
-                    Console.WriteLine($"{fields[8].Val} wins");
-                    return false;
-                }
-                else
-                {
-                    var areEs = fields.FindIndex(elem => elem.Val == 'e');
-                    if (areEs == -1)
+                return true;
+            }
+        }
+
+        public void MoveCursor()
+        {
+
+            switch (Keypress.Key)
+            {
+                case ConsoleKey.UpArrow:
+
+                    if (TP == 6)
                     {
-                        Console.SetCursorPosition(3, 17);
-                        Console.WriteLine("Game over");
-                        return false;
+                        TP = 14;
+                    }
+                    else
+                    {
+                        TP -= 4;
                     }
 
-                    return true;
-                }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (TP == 14)
+                    {
+                        TP = 6;
+                    }
+                    else
+                    {
+                        TP += 4;
+                    }
+
+                    break;
+                case ConsoleKey.LeftArrow:
+                    if (LP == 4)
+                    {
+                        LP = 12;
+                    }
+                    else
+                    {
+                        LP -= 4;
+                    }
+
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (LP == 12)
+                    {
+                        LP = 4;
+                    }
+                    else
+                    {
+                        LP += 4;
+                    }
+                    break;
+                case ConsoleKey.Spacebar:
+                    break;
+
+
+            }
         }
     }
 }
