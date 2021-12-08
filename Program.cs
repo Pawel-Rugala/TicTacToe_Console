@@ -1,5 +1,4 @@
-﻿using System;
-using static TicTacToe_Console.GameHandler;
+﻿using static TicTacToe_Console.GameHandler;
 
 namespace TicTacToe_Console
 {
