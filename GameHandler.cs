@@ -18,11 +18,13 @@ namespace TicTacToe_Console
             {
                 Console.WriteLine($"   Game no: {board.GameNo} \n\n");
                 PrintBoard();
-                KeyAction();
-                if (board.Winner != ' ')
+                Console.SetCursorPosition(board.LeftPos, board.TopPos);
+                while(board.Winner==' ')
                 {
-                    WannaPlay(board);
+                    KeyAction(board);
+                    Console.SetCursorPosition(board.LeftPos, board.TopPos);
                 }
+                WannaPlay(board);
             } while (board.GameInProgress); 
 
         }
@@ -67,20 +69,62 @@ namespace TicTacToe_Console
 
         }
         
-        public static void KeyAction()
+        public static void KeyAction(Board board)
         {
             ConsoleKeyInfo keypress = Console.ReadKey();
             switch (keypress.Key)   
             {
                 case ConsoleKey.LeftArrow:
+                    if(board.LeftPos==4)
+                    {
+                        board.LeftPos = 12;
+                    }
+                    else
+                    {
+                        board.LeftPos -= 4;
+                    }
                     break;
                 case ConsoleKey.RightArrow:
+                    if (board.LeftPos == 12)
+                    {
+                        board.LeftPos = 4;
+                    }
+                    else
+                    {
+                        board.LeftPos += 4;
+                    }
                     break;
                 case ConsoleKey.UpArrow:
+                    if (board.TopPos == 7)
+                    {
+                        board.TopPos = 15;
+                    }
+                    else
+                    {
+                        board.TopPos -= 4;
+                    }
                     break;
                 case ConsoleKey.DownArrow:
+                    if (board.TopPos == 15)
+                    {
+                        board.TopPos = 7;
+                    }
+                    else
+                    {
+                        board.TopPos += 4;
+                    }
+                    break;
+                case ConsoleKey.Spacebar:
+                    char mark = board.xTurn ? 'X' : 'O';
+                    Console.SetCursorPosition(board.LeftPos, board.TopPos);
+                    Console.Write(mark);
+                    Console.SetCursorPosition(4, 7);
+                    board.xTurn = !board.xTurn;
                     break;
                 default:
+                    Console.SetCursorPosition(board.LeftPos, board.TopPos);
+                    Console.Write(" ");
+                    Console.SetCursorPosition(board.LeftPos, board.TopPos);
                     break;
             }
         }
