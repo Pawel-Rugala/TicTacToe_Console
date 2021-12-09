@@ -22,12 +22,12 @@ namespace TicTacToe_Console
                 Console.SetCursorPosition(board.LeftPos, board.TopPos);
                 while(board.Winner==' ')
                 {
-                    ErrorCheck(board);
-                    KeyAction(board);
+                    ErrorCheck(board, top);
+                    KeyAction(board, top);
                     Console.SetCursorPosition(board.LeftPos, board.TopPos);
                     board.CheckWin();
                 }
-                WannaPlay(board);
+                WannaPlay(board, top);
             } while (board.GameInProgress); 
         }
         public static void PrintBoard()
@@ -66,7 +66,7 @@ namespace TicTacToe_Console
                     case ConsoleKey.LeftArrow:
                         validKey = false;
                         board.ResetVal();
-                        ClearStatus();
+                        ClearStatus(top);
                         Console.SetCursorPosition(0, top+3);
                         break;
                     case ConsoleKey.RightArrow:
@@ -110,7 +110,7 @@ namespace TicTacToe_Console
                             board.LeftPos = 4;
                             board.TopPos = top+7;
                             board.Error = null;
-                            ClearStatus();
+                            ClearStatus(top);
                             break;
                         default:
                             Console.WriteLine("invalid key");

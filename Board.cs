@@ -16,6 +16,7 @@ namespace TicTacToe_Console
             LeftPos = 4;
             TopPos = top+7;
             xTurn = true;
+            TopBase = top+7;
             fields = new List<Field>()
         {
             new Field(4, top+7),
@@ -36,6 +37,7 @@ namespace TicTacToe_Console
         public int TopPos { get; set; }
         public bool xTurn { get; set; }
         public string Error { get; set; }
+        public int TopBase { get; set; }
 
         public List<Field> fields;
         public List<char> status = new List<char>();
@@ -127,7 +129,7 @@ namespace TicTacToe_Console
             }
             GameNo += 1;
             LeftPos = 4;
-            TopPos = 7;
+            TopPos = TopBase;
             Winner = ' ';
         }
 
