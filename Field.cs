@@ -10,7 +10,7 @@ namespace TicTacToe_Console
     {
         public Field(int x, int y)
         {
-            Val = 'e';
+            Val = ' ';
             X = x;
             Y = y;
         }
