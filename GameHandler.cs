@@ -32,9 +32,9 @@ namespace TicTacToe_Console
         public static void PrintBoard()
         {
             Console.WriteLine("      |   |   ");
+            Console.WriteLine("      |   |          Navigate using arrow keys");
             Console.WriteLine("      |   |   ");
-            Console.WriteLine("      |   |   ");
-            Console.WriteLine("   -----------");
+            Console.WriteLine("   -----------       Press SPACE to add mark");
             Console.WriteLine("      |   |   ");
             Console.WriteLine("      |   |   ");
             Console.WriteLine("      |   |   ");
