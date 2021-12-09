@@ -10,7 +10,8 @@ namespace TicTacToe_Console
     {
         public static void StartGame()
         {
-            Board board = new Board();
+            int top = Console.GetCursorPosition().Top;
+            Board board = new Board(top);
             Console.WriteLine("   TIC TAC TOE GAME");
             Console.WriteLine("        X / O\n");
 
@@ -43,9 +44,9 @@ namespace TicTacToe_Console
             Console.WriteLine("      |   |   ");
             Console.WriteLine("      |   |   ");
         }
-        public static void WannaPlay(Board board)
+        public static void WannaPlay(Board board, int top)
         {
-            Console.SetCursorPosition(0, 19);
+            Console.SetCursorPosition(0, top+19);
             if (board.Winner == '-')
             {
                 Console.WriteLine("DRAW");
@@ -66,7 +67,7 @@ namespace TicTacToe_Console
                         validKey = false;
                         board.ResetVal();
                         ClearStatus();
-                        Console.SetCursorPosition(0, 3);
+                        Console.SetCursorPosition(0, top+3);
                         break;
                     case ConsoleKey.RightArrow:
                         validKey = false;
@@ -78,24 +79,24 @@ namespace TicTacToe_Console
             }
 
         }
-        public static void ClearStatus()
+        public static void ClearStatus(int top)
         {
-            Console.SetCursorPosition(0, 19);
+            Console.SetCursorPosition(0, top+19);
             Console.WriteLine(new String(' ', Console.BufferWidth));
             Console.WriteLine(new String(' ', Console.BufferWidth));
             Console.WriteLine(new String(' ', Console.BufferWidth));
             Console.WriteLine(new String(' ', Console.BufferWidth));
             Console.WriteLine(new String(' ', Console.BufferWidth));
-            Console.SetCursorPosition(4, 7);
+            Console.SetCursorPosition(4, top+7);
 
         }
-        public static void ErrorCheck(Board board)
+        public static void ErrorCheck(Board board, int top)
         {
             if(board.Error is not null)
             {
                 Console.SetCursorPosition(board.LeftPos, board.TopPos);
                 Console.Write(board.GetValue());
-                Console.SetCursorPosition(0, 19);
+                Console.SetCursorPosition(0, top+19);
                 Console.WriteLine(board.Error);
                 Console.WriteLine("Press SPACE to continue...");
                 bool validKey = true;
@@ -107,7 +108,7 @@ namespace TicTacToe_Console
                         case ConsoleKey.Spacebar:
                             validKey = false;
                             board.LeftPos = 4;
-                            board.TopPos = 7;
+                            board.TopPos = top+7;
                             board.Error = null;
                             ClearStatus();
                             break;
@@ -118,7 +119,7 @@ namespace TicTacToe_Console
                 }
             }
         }
-        public static void KeyAction(Board board)
+        public static void KeyAction(Board board, int top)
         {
             ConsoleKeyInfo keypress = Console.ReadKey();
             switch (keypress.Key)   
@@ -144,9 +145,9 @@ namespace TicTacToe_Console
                     }
                     break;
                 case ConsoleKey.UpArrow:
-                    if (board.TopPos == 7)
+                    if (board.TopPos == top+7)
                     {
-                        board.TopPos = 15;
+                        board.TopPos = top+15;
                     }
                     else
                     {
@@ -154,9 +155,9 @@ namespace TicTacToe_Console
                     }
                     break;
                 case ConsoleKey.DownArrow:
-                    if (board.TopPos == 15)
+                    if (board.TopPos == top+15)
                     {
-                        board.TopPos = 7;
+                        board.TopPos = top+7;
                     }
                     else
                     {
@@ -171,7 +172,7 @@ namespace TicTacToe_Console
                         board.AddMark(mark);
                         Console.SetCursorPosition(board.LeftPos, board.TopPos);
                         Console.Write(mark);
-                        Console.SetCursorPosition(4, 7);
+                        Console.SetCursorPosition(4, top+7);
                         board.xTurn = !board.xTurn;
                     }
                     else
