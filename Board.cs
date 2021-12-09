@@ -8,14 +8,27 @@ namespace TicTacToe_Console
 {
     public class Board
     {
-        public Board()
+        public Board(int top)
         {
             GameInProgress = true;
             GameNo = 1;
             Winner = ' ';
             LeftPos = 4;
-            TopPos = 7;
+            TopPos = top+7;
             xTurn = true;
+            TopBase = top+7;
+            fields = new List<Field>()
+        {
+            new Field(4, top+7),
+            new Field(8, top+7),
+            new Field(12,top+7),
+            new Field(4, top+11),
+            new Field(8, top+11),
+            new Field(12, top+11),
+            new Field(4, top+15),
+            new Field(8, top+15),
+            new Field(12, top+15)
+        };
         }
         public bool GameInProgress { get; set; }
         public int GameNo { get; set; }
@@ -24,19 +37,9 @@ namespace TicTacToe_Console
         public int TopPos { get; set; }
         public bool xTurn { get; set; }
         public string Error { get; set; }
+        public int TopBase { get; set; }
 
-        public List<Field> fields = new List<Field>()
-        {
-            new Field(4,7),
-            new Field(8, 7),
-            new Field(12,7),
-            new Field(4, 11),
-            new Field(8, 11),
-            new Field(12, 11),
-            new Field(4, 15),
-            new Field(8, 15),
-            new Field(12, 15)
-        };
+        public List<Field> fields;
         public List<char> status = new List<char>();
 
 
@@ -126,7 +129,7 @@ namespace TicTacToe_Console
             }
             GameNo += 1;
             LeftPos = 4;
-            TopPos = 7;
+            TopPos = TopBase;
             Winner = ' ';
         }
 
